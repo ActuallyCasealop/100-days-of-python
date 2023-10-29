@@ -1,4 +1,4 @@
-# Day 4 summary.
+# Day 4 Summary.
 
 Day 4 tackles how to use the random module in genrating random integers or choices.
 it also tackles how to create and manipulate list and working on nested list.

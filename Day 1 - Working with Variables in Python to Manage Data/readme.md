@@ -1,4 +1,4 @@
-# Day 1 summary
+# Day 1 Summary.
 
 Day 1 is the basics of the basics. tackling the topics about variables,
 how to store and read user inputs, string manipulation and whatnot.
