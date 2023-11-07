@@ -38,8 +38,11 @@ while Auction_on:
 
 bidder = []
 for entry in bidders:
-    if entry["bid ammount"] > bidder["bid ammount"]:
+    if not bidder:
+        bidder = entry
+    elif entry["bid ammount"] > bidder["bid ammount"]:
         bidder = entry
     else:
         pass
-print(bidder)
+    
+print(f"The auction have concluded! {bidder['name']} has the highest bid of: {bidder['bid ammount']} ")
