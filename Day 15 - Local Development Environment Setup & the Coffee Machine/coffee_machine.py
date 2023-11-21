@@ -30,6 +30,13 @@ resources = {
     "coffee": 100,
 }
 
+coin_value = {
+    'quarters':0.25,
+    'dimes':0.10,
+    'nickles':0.05,
+    'pennies':0.01
+}
+
 def check_resources(drink):
     for key, value in MENU[drink]['ingredients'].items():
         if resources[key] < value:
@@ -44,9 +51,19 @@ def create_drink(drink):
         resources[key] -= value
     print(f"Enjoy your {drink}")
 
-turned_on = True
+def check_coins(drink):
+    global user_coins
+    global total_coins
 
-while turned_on:
+    if MENU[drink]['cost'] <= user_coins:
+        total_coins += MENU[drink]['cost']
+        user_coins -= MENU[drink]['cost']
+        return True
+    return False
+
+total_coins = 0
+
+while True:
     user_input = input(">>>: ")
     if user_input not in ['espresso','latte','cappuccino','off','report']:
         print("Invalid entry; please try again")
@@ -56,9 +73,18 @@ while turned_on:
         elif user_input == 'report':
             for key, value in resources.items():
                 print(f"{key} : {value}")
+            print(f"Money : {total_coins}")
         else:
+            user_coins = 0
             if check_resources(user_input) == True:
-                create_drink(user_input)
+                    for coin in coin_value:
+                        coin_input = int(input(f"How many {coin}?\n>>>: "))
+                        user_coins += coin_input*coin_value[coin]
+                    
+                    if check_coins(user_input) == True:
+                        create_drink(user_input)
+                        print(f"here is your change: {"{:0.2f}".format(user_coins)}")
+                    else:
+                        print("Insufficient Fund; refunding.")
             else:
-                break
-        
+                break       
