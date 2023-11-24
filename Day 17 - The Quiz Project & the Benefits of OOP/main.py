@@ -1,4 +1,6 @@
 from data import question_data
+from quiz_brain import QuizBrain
+import random, os
 
 class Question:
 
@@ -11,5 +13,8 @@ question_bank = []
 for question in question_data:
     question_bank.append(Question(question['text'],question['answer']))
 
-for i in question_bank:
-    print(i)
+quiz_brain = QuizBrain(question_bank)
+
+while quiz_brain.still_have_question():
+    quiz_brain.next_question()
+print(f"You have completed the Challenge. Final Score: {quiz_brain.score}")
