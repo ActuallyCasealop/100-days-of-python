@@ -1,5 +1,7 @@
 from turtle import Turtle
 
+coor = [(-20,0),(-40,0),(-60,0)]
+
 class Snake:
     def __init__(self):
         self.segments = []
@@ -7,14 +9,18 @@ class Snake:
         self.snake_head = self.segments[0]
     
     def create_snake(self):
-        segment_cor = 0
-        for i in range(0,3):
-            new_segment = Turtle(shape='square')
-            self.segments.append(new_segment)
-            new_segment.penup()
-            new_segment.color('white')
-            new_segment.setx(segment_cor)
-            segment_cor -= 20
+        for i in coor:
+            self.add_segment(i)
+    
+    def add_segment(self, position):
+        new_segment = Turtle(shape='square')
+        self.segments.append(new_segment)
+        new_segment.penup()
+        new_segment.color('white')
+        new_segment.goto(position)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
     
     def initialize(self):
         for i in range(len(self.segments)-1,0,-1):
