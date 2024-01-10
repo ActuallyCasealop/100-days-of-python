@@ -27,6 +27,7 @@ while game_on:
     
     if snake.snake_head.xcor() > 280 or snake.snake_head.xcor() < -280 or snake.snake_head.ycor() > 280 or snake.snake_head.ycor() < -280:
         game_on = False
+        score_board.score_reset()
         score_board.game_over()
 
     if snake.snake_head.distance(food) < 15:
@@ -37,6 +38,7 @@ while game_on:
     for segment in snake.segments[1:]:
         if snake.snake_head.distance(segment) < 10:
             game_on = False
+            score_board.score_reset()
             score_board.game_over()
     
 
