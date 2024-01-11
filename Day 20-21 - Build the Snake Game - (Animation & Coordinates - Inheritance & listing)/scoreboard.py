@@ -13,10 +13,13 @@ class Scoreboard(Turtle):
     
     def init_scoreboard(self):
         with open('Day 20-21 - Build the Snake Game - (Animation & Coordinates - Inheritance & listing)\score.txt',mode='r') as highscore:
-            if int(highscore.read()) == 0:
-                pass
+            try:
+                score_content = int(highscore.read())
+            except ValueError:
+                self.highscore = 0
             else:
-                self.highscore = int(highscore.read())
+                self.highscore = score_content
+            
         highscore.close()
 
 
@@ -36,5 +39,5 @@ class Scoreboard(Turtle):
             self.highscore = self.score
 
         with open('Day 20-21 - Build the Snake Game - (Animation & Coordinates - Inheritance & listing)\score.txt',mode='w') as highscore:
-            highscore.write(self.highscore)
+            highscore.write(str(self.highscore))
             highscore.close()
