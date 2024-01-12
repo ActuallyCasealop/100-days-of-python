@@ -1,8 +1,8 @@
 from turtle import Turtle, Screen
-import pandas
+import pandas,os
 
-state_map = r"Day 25- Working with CSV Data and the Pandas Library\blank_states_img.gif"
-states_data = pandas.read_csv(r'Day 25- Working with CSV Data and the Pandas Library\50_states.csv')
+state_map = r"Day 25 - Working with CSV Data and the Pandas Library\blank_states_img.gif"
+states_data = pandas.read_csv(r'Day 25 - Working with CSV Data and the Pandas Library\50_states.csv')
 all_state_list = states_data.state.tolist()
 
 display_turt = Turtle()
@@ -17,27 +17,35 @@ screen.addshape(state_map)
 screen.setup(730,496)
 turtle.shape(state_map)
 
-guessed_state = []
+gss_state = []
 
-game_on = True
+path = 'Day 25 - Working with CSV Data and the Pandas Library'
 
-while len(guessed_state) < 50:
-    user_input = screen.textinput(title=f"{len(guessed_state)}/50 States Guessed.", prompt="What's another state name?").title()
+def check_guessed_states():
+    global guessed_states
+    if os.path.isfile('Day 25 - Working with CSV Data and the Pandas Library\guessed_states.csv') == False:
+        return 0
+    else:
+        guessed_states = pandas.read_csv('Day 25 - Working with CSV Data and the Pandas Library\guessed_states.csv')
+        return 1
 
+while len(gss_state) < 50:
+    print(check_guessed_states())
+
+    user_input = screen.textinput(title=f"{len(gss_state)}/50 States Guessed.", prompt="What's another state name?").title()
+
+    print(user_input)
     if user_input in all_state_list:
-        guessed_state.append(user_input)
+        gss_state.append(user_input)
         state_data = states_data[states_data.state == user_input]
         display_turt.goto(int(state_data.x),int(state_data.y))
         display_turt.write(f'{user_input}',align='center',font=('arial',12,'normal'))
     
-    if user_input == 'exit':
-        missing_states = []
-        for state in all_state_list:
-            if state not in guessed_state:
-                missing_states.append(state)
+    if user_input == 'Exit':
+        to_csv_data = pandas.DataFrame(gss_state)
+        to_csv_data.to_csv(path+'\guessed_states.csv')
+
+        print(gss_state)
         break
-
-
-
 
 screen.mainloop()
