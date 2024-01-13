@@ -24,14 +24,25 @@ path = 'Day 25 - Working with CSV Data and the Pandas Library'
 def check_guessed_states():
     global guessed_states
     if os.path.isfile('Day 25 - Working with CSV Data and the Pandas Library\guessed_states.csv') == False:
-        return 0
+        pass
     else:
-        guessed_states = pandas.read_csv('Day 25 - Working with CSV Data and the Pandas Library\guessed_states.csv')
-        return 1
+        guessed_states = pandas.read_csv('Day 25 - Working with CSV Data and the Pandas Library\guessed_states.csv')['0'].tolist()
+        display_guessed(guessed_states)
+
+def display_guessed(guessed_states):
+    global gss_state
+    for state in guessed_states:
+        gss_state.append(state)
+        all_state_list.pop(all_state_list.index(state))
+        
+    for state in gss_state:
+        state_data = states_data[states_data.state == state]
+        display_turt.goto(int(state_data.x),int(state_data.y))
+        display_turt.write(f'{state}',align='center',font=('arial',12,'normal'))
+
+check_guessed_states()
 
 while len(gss_state) < 50:
-    print(check_guessed_states())
-
     user_input = screen.textinput(title=f"{len(gss_state)}/50 States Guessed.", prompt="What's another state name?").title()
 
     print(user_input)
@@ -43,9 +54,7 @@ while len(gss_state) < 50:
     
     if user_input == 'Exit':
         to_csv_data = pandas.DataFrame(gss_state)
-        to_csv_data.to_csv(path+'\guessed_states.csv')
-
-        print(gss_state)
+        to_csv_data.to_csv(path+'\guessed_states.csv',index=False)
         break
 
 screen.mainloop()
