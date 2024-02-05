@@ -12,6 +12,7 @@ LONG_BREAK_MIN = 20
 # ---------------------------- TIMER RESET ------------------------------- # 
 def timer_reset():
     window.after_cancel(Cdown_timer)
+    timer.config()
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 check_marks = ""
