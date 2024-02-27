@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def password_generator():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -24,13 +25,25 @@ def save_password():
     username = username_entry.get()
     password = password_entry.get()
 
+    new_data = {
+        website: {
+            "username":username,
+            "password":password,
+        }
+    }
+
     if len(website) < 1 or len(password) < 1 or len(username) < 1:
         messagebox.showerror(title="Error",message="The following field might be empty:\nWebsite\nUsername\nPassword")
     else:    
         popup_resonse = messagebox.askokcancel(title=website,message=f"Are the following information correct?\nUsername: {username}\nPassword: {password}")
         if popup_resonse:
-            with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.txt","a+") as pwd:
-                pwd.write(f"{website} | {username} | {password}\n")
+            with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","r") as pwd:
+                data = json.load(pwd)
+                data.update(new_data)
+            
+            with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","w") as pwd:
+                json.dump(data, pwd, indent=4)
+
             website_entry.delete(0,END)
             password_entry.delete(0,END)
 
