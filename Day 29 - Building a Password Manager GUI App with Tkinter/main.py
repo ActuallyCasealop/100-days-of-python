@@ -37,15 +37,21 @@ def save_password():
     else:    
         popup_resonse = messagebox.askokcancel(title=website,message=f"Are the following information correct?\nUsername: {username}\nPassword: {password}")
         if popup_resonse:
-            with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","r") as pwd:
-                data = json.load(pwd)
-                data.update(new_data)
-            
-            with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","w") as pwd:
-                json.dump(data, pwd, indent=4)
-
-            website_entry.delete(0,END)
-            password_entry.delete(0,END)
+                try:
+                    with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","r") as pwd:
+                        data = json.load(pwd)
+                
+                except FileNotFoundError:
+                    with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","w") as pwd:
+                        json.dump(new_data, pwd, indent=4)
+                
+                else:
+                    data.update(new_data)
+                    with open(r"Day 29 - Building a Password Manager GUI App with Tkinter\passwords.json","w") as pwd:
+                        json.dump(data, pwd, indent=4)
+                finally:
+                    website_entry.delete(0,END)
+                    password_entry.delete(0,END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
