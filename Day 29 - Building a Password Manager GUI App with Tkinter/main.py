@@ -70,7 +70,6 @@ def find_website():
         else:
              messagebox.showerror(title="ERROR",message="Entry does not exist in the repository, consider saving one first.")
 
-
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
