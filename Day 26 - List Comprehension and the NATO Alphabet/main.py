@@ -13,6 +13,4 @@ def generate():
         generate()
     else:
         print(result)
-
 generate()
-
